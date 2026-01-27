@@ -1,0 +1,18 @@
+
+entity type Operation {
+  aircraft: Aircraft
+
+  description: string enum("Mission", "Training", "Test")
+
+  startDate: datetime
+
+  endDate: datetime
+
+  alerts: [string]
+
+  status: string enum("Planned", "In Progress", "Completed")
+
+  origin: Base
+
+  destination: Base
+}

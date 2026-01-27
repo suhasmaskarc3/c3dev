@@ -1,0 +1,7 @@
+{
+  "name" : "pkg9rel",
+  "version" : "1.0.0",
+  "dependencies" : {
+    "reliability": "21.0.1-alpha.6+6.8.9.0-rc.629.437b84048ea2dcad7c26b5f2b03dd2561dbb9ba6.task.rel21-8.9.uid.02480067"
+  }
+}

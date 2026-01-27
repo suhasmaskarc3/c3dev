@@ -1,0 +1,9 @@
+{
+  "version" : "1.0.0",
+  "declaredDependencies" : {
+    "uiComponentLibraryReact" : "8.9"
+  },
+  "resolvedDependencies" : {
+    "genaiPlatform" : "3.1.0-support.17+17.8.8.0.3.02a0e6d0b9db36592c6ca46b44dda26f5bf5bef6.support.v3.1.uid.e24402de-rsc"
+  }
+}

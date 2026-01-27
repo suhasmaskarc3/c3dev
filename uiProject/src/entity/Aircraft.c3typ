@@ -1,0 +1,15 @@
+
+
+entity type Aircraft {
+    registrationNumber: string
+
+    model: string
+
+    status: string enum("Ready", "In Maintenance", "Grounded", "Deployed")
+
+    lastInspectionDate: datetime
+
+    location: Base
+
+    maintenanceRecords: [MaintenanceRecord](aircraft)
+}

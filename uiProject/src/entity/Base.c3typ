@@ -1,0 +1,10 @@
+
+entity type Base {
+  name: string
+
+  latitude: double
+
+  longitude: double
+
+  aircraft: [Aircraft](location)
+}

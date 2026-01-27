@@ -1,0 +1,14 @@
+// pkg9rel/src/WeatherObservation.c3typ
+// C3 Type Definition for WeatherObservation
+// Represents a single weather data point for a location at a specific time.
+
+type WeatherObservation {
+
+  location: string;      // City, facility, or custom location label
+  lat: double;          // Latitude
+  long: double;         // Longitude
+  temp: double;         // Temperature (°C or °F, as per system)
+  condition: string;    // Weather condition (e.g., "Clear", "Rain")
+  timestamp: long;      // Unix epoch milliseconds
+
+}
