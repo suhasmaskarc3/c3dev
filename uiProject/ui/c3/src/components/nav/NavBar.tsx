@@ -8,15 +8,13 @@ import Tooltip from '@mui/material/Tooltip';
 import { NavItem } from '@c3/app/ui/src/types/types';
 import NavButton from '@c3/app/ui/src/components/nav/NavButton';
 import { useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface NavBarProps {
   activePath?: string;
 }
 
 const NavBar = ({ activePath = '/' }: NavBarProps) => {
-  const { isDarkMode, toggleTheme } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { isDarkMode, toggleTheme, theme } = useTheme();
 
   const navItems: NavItem[] = [
     {

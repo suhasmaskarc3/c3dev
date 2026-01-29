@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch } from '@c3/ui/UiSdlUseDispatch';
 import { NavItem } from '@c3/app/ui/src/types/types';
 import { useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface NavButtonProps {
   item: NavItem;
@@ -12,8 +11,7 @@ interface NavButtonProps {
 
 const NavButton = ({ item, index, activePath }: NavButtonProps) => {
   const isActive = activePath === item.path;
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   const dispatch = useDispatch();
 

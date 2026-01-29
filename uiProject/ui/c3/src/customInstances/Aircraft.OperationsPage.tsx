@@ -18,15 +18,13 @@ import OperationsPaginatedTable from '@c3/app/ui/src/components/table/Operations
 import KPIStatsContainer from '@c3/app/ui/src/components/stats/KPIStatsContainer';
 import KPIStatsTile from '@c3/app/ui/src/components/stats/KPIStatsTile';
 import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface ContentHeaderProps {
   title: string;
 }
 
 const ContentHeader = ({ title }: ContentHeaderProps) => {
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   return (
     <div style={{ marginBottom: '16px' }}>
@@ -50,8 +48,7 @@ interface ContentDescriptionProps {
 }
 
 const ContentDescription = ({ description }: ContentDescriptionProps) => {
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   return <p style={{ color: theme.textSecondary, fontSize: '1.125rem', margin: 0, lineHeight: '1.6' }}>{description}</p>;
 };

@@ -16,13 +16,11 @@ import KPIStatsContainer from '@c3/app/ui/src/components/stats/KPIStatsContainer
 import KPIStatsTile from '@c3/app/ui/src/components/stats/KPIStatsTile';
 import AircraftPaginatedTable from '@c3/app/ui/src/components/table/AircraftPaginatedTable';
 import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 import 'leaflet/dist/leaflet.css';
 
 const AircraftBaseDetailsPageContent = () => {
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   /*
     TODO 3.1: Define a selector to get the selected base ID from the Redux state.

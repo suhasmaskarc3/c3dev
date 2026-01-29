@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from '@c3/app/ui/src/components/nav/NavBar';
 import { useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface PageContainerProps {
   children: React.ReactNode;
@@ -9,8 +8,7 @@ interface PageContainerProps {
 }
 
 const PageContainer = ({ children, currentPath }: PageContainerProps) => {
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   return (
     <div style={{ display: 'flex', backgroundColor: theme.background, minHeight: '100vh' }}>

@@ -9,7 +9,6 @@ import LoadingAnimation from '@c3/app/ui/src/components/misc/LoadingAnimation';
 import ErrorModal from '@c3/app/ui/src/components/misc/ErrorModal';
 import PageContainer from '@c3/app/ui/src/components/container/PageContainer';
 import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
-import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 import { Base } from '@c3/types';
 
 import 'leaflet/dist/leaflet.css';
@@ -18,8 +17,7 @@ const AircraftHomePageContent = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [bases, setBases] = useState<Base[]>([]);
-  const { isDarkMode } = useTheme();
-  const theme = isDarkMode ? darkTheme : lightTheme;
+  const { theme } = useTheme();
 
   useEffect(() => {
     const loadBases = async () => {

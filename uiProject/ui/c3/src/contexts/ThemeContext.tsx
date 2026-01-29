@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface ThemeContextType {
   isDarkMode: boolean;
   toggleTheme: () => void;
+  theme: typeof lightTheme;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -23,8 +25,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     setIsDarkMode((prev) => !prev);
   };
 
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme, theme }}>
       {children}
     </ThemeContext.Provider>
   );
