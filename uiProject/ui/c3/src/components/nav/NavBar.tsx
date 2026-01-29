@@ -1,14 +1,23 @@
 import React from 'react';
 import MapIcon from '@mui/icons-material/Map';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import { NavItem } from '@c3/app/ui/src/types/types';
 import NavButton from '@c3/app/ui/src/components/nav/NavButton';
+import { useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
+import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface NavBarProps {
   activePath?: string;
 }
 
 const NavBar = ({ activePath = '/' }: NavBarProps) => {
+  const { isDarkMode, toggleTheme } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
+
   const navItems: NavItem[] = [
     {
       icon: <MapIcon sx={{ fontSize: 28 }} />,
@@ -27,8 +36,8 @@ const NavBar = ({ activePath = '/' }: NavBarProps) => {
       style={{
         width: '70px',
         height: '100vh',
-        backgroundColor: '#f5f5f5',
-        borderRight: '1px solid #e0e0e0',
+        backgroundColor: theme.surface,
+        borderRight: `1px solid ${theme.border}`,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -67,6 +76,24 @@ const NavBar = ({ activePath = '/' }: NavBarProps) => {
       {navItems.map((item, index) => (
         <NavButton key={item.path} item={item} index={index} activePath={activePath} />
       ))}
+
+      {/* Dark Mode Toggle - positioned at bottom */}
+      <div style={{ marginTop: 'auto', marginBottom: '20px' }}>
+        <Tooltip title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'} placement="right">
+          <IconButton
+            onClick={toggleTheme}
+            sx={{
+              color: theme.text,
+              '&:hover': {
+                backgroundColor: theme.hover,
+              },
+            }}
+            aria-label="Toggle dark mode"
+          >
+            {isDarkMode ? <LightModeIcon sx={{ fontSize: 28 }} /> : <DarkModeIcon sx={{ fontSize: 28 }} />}
+          </IconButton>
+        </Tooltip>
+      </div>
     </div>
   );
 };

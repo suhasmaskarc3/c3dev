@@ -8,14 +8,18 @@ import BasePopup from '@c3/app/ui/src/components/map/BasePopup';
 import LoadingAnimation from '@c3/app/ui/src/components/misc/LoadingAnimation';
 import ErrorModal from '@c3/app/ui/src/components/misc/ErrorModal';
 import PageContainer from '@c3/app/ui/src/components/container/PageContainer';
+import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
+import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 import { Base } from '@c3/types';
 
 import 'leaflet/dist/leaflet.css';
 
-const AircraftHomePage = () => {
+const AircraftHomePageContent = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [bases, setBases] = useState<Base[]>([]);
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
   useEffect(() => {
     const loadBases = async () => {
@@ -80,9 +84,9 @@ const AircraftHomePage = () => {
         >
           <ZoomControl position="bottomleft" />
 
-          {/* Weather map tile layer (OpenWeatherMap geocoding only) */}
+          {/* Map tile layer with dark mode support */}
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+            url={theme.mapTile}
             attribution='&copy; <a href="https://www.openweathermap.org/">OpenWeatherMap</a> contributors'
           />
 
@@ -103,6 +107,14 @@ const AircraftHomePage = () => {
         </MapContainer>
       </div>
     </PageContainer>
+  );
+};
+
+const AircraftHomePage = () => {
+  return (
+    <ThemeProvider>
+      <AircraftHomePageContent />
+    </ThemeProvider>
   );
 };
 

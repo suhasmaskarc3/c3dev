@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch } from '@c3/ui/UiSdlUseDispatch';
 import { NavItem } from '@c3/app/ui/src/types/types';
+import { useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
+import { lightTheme, darkTheme } from '@c3/app/ui/src/theme/colors';
 
 interface NavButtonProps {
   item: NavItem;
@@ -10,6 +12,8 @@ interface NavButtonProps {
 
 const NavButton = ({ item, index, activePath }: NavButtonProps) => {
   const isActive = activePath === item.path;
+  const { isDarkMode } = useTheme();
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
   const dispatch = useDispatch();
 
@@ -36,13 +40,13 @@ const NavButton = ({ item, index, activePath }: NavButtonProps) => {
         gap: '3px',
         padding: '6px 8px',
         cursor: 'pointer',
-        backgroundColor: isActive ? '#e0e0e0' : 'transparent',
+        backgroundColor: isActive ? theme.hover : 'transparent',
         transition: 'all 0.2s ease',
         boxSizing: 'border-box',
       }}
       onMouseEnter={(e) => {
         if (!isActive) {
-          e.currentTarget.style.backgroundColor = '#f0f0f0';
+          e.currentTarget.style.backgroundColor = theme.hover;
         }
       }}
       onMouseLeave={(e) => {
@@ -53,7 +57,7 @@ const NavButton = ({ item, index, activePath }: NavButtonProps) => {
     >
       <div
         style={{
-          color: isActive ? '#000' : '#666',
+          color: isActive ? theme.text : theme.textSecondary,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -65,7 +69,7 @@ const NavButton = ({ item, index, activePath }: NavButtonProps) => {
       <span
         style={{
           fontSize: '10px',
-          color: isActive ? '#000' : '#666',
+          color: isActive ? theme.text : theme.textSecondary,
           fontWeight: isActive ? 600 : 400,
           textAlign: 'center',
           lineHeight: 1,
