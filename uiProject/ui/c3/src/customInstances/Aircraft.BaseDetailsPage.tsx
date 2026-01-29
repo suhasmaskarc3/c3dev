@@ -15,10 +15,13 @@ import { fetchAircraftCountWithFilter } from '@c3/app/ui/src/components/CRUDMeth
 import KPIStatsContainer from '@c3/app/ui/src/components/stats/KPIStatsContainer';
 import KPIStatsTile from '@c3/app/ui/src/components/stats/KPIStatsTile';
 import AircraftPaginatedTable from '@c3/app/ui/src/components/table/AircraftPaginatedTable';
+import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
 
 import 'leaflet/dist/leaflet.css';
 
-const AircraftBaseDetailsPage = () => {
+const AircraftBaseDetailsPageContent = () => {
+  const { theme } = useTheme();
+
   /*
     TODO 3.1: Define a selector to get the selected base ID from the Redux state.
               Read in using the Redux route `/pageParams/baseId`.
@@ -96,7 +99,6 @@ const AircraftBaseDetailsPage = () => {
       <div
         style={{
           padding: '24px',
-          backgroundColor: '#fff',
           minHeight: '100vh',
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         }}
@@ -107,28 +109,28 @@ const AircraftBaseDetailsPage = () => {
             style={{
               fontWeight: 700,
               margin: '0 0 12px 0',
-              color: '#000000',
+              color: theme.text,
               fontSize: '2.5rem',
               letterSpacing: '-0.02em',
             }}
           >
             {base.name}
           </h1>
-          <p style={{ color: '#666', fontSize: '1.125rem', margin: 0, lineHeight: '1.6' }}>
+          <p style={{ color: theme.textSecondary, fontSize: '1.125rem', margin: 0, lineHeight: '1.6' }}>
             Detailed information about {base.name} operations and statistics.
           </p>
         </div>
 
         <div style={{ display: 'flex', marginBottom: '32px', gap: '24px', alignItems: 'center' }}>
-          <h2 style={{ fontWeight: 600, margin: 0, color: '#000000', fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
+          <h2 style={{ fontWeight: 600, margin: 0, color: theme.text, fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
             Base ID: {base.id}
           </h2>
-          <div style={{ borderLeft: '2px solid #d0d0d0', height: '28px' }}></div>
-          <h2 style={{ fontWeight: 600, margin: 0, color: '#000000', fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
+          <div style={{ borderLeft: `2px solid ${theme.border}`, height: '28px' }}></div>
+          <h2 style={{ fontWeight: 600, margin: 0, color: theme.text, fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
             Latitude: {base.latitude.toFixed(4)}°
           </h2>
-          <div style={{ borderLeft: '2px solid #d0d0d0', height: '28px' }}></div>
-          <h2 style={{ fontWeight: 600, margin: 0, color: '#000000', fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
+          <div style={{ borderLeft: `2px solid ${theme.border}`, height: '28px' }}></div>
+          <h2 style={{ fontWeight: 600, margin: 0, color: theme.text, fontSize: '1.125rem', letterSpacing: '-0.01em' }}>
             Longitude: {base.longitude.toFixed(4)}°
           </h2>
         </div>
@@ -173,7 +175,7 @@ const AircraftBaseDetailsPage = () => {
             >
               <ZoomControl position="bottomleft" />
               <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                url={theme.mapTile}
                 attribution='&copy; <a href="https://www.openweathermap.org/">OpenWeatherMap</a> contributors'
               />
               <Marker position={[base.latitude, base.longitude]} icon={windTurbineIcon}>
@@ -194,6 +196,14 @@ const AircraftBaseDetailsPage = () => {
         </ContentSection>
       </div>
     </PageContainer>
+  );
+};
+
+const AircraftBaseDetailsPage = () => {
+  return (
+    <ThemeProvider>
+      <AircraftBaseDetailsPageContent />
+    </ThemeProvider>
   );
 };
 

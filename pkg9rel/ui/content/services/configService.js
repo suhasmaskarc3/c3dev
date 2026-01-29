@@ -3,7 +3,7 @@
 const DEFAULT_CONFIG = {
     refreshIntervalMinutes: 60, // Default to 1 hour
     features: {
-        enableThemeToggle: false,
+        enableThemeToggle: true,
         enableBetaFeatures: false
     }
 };

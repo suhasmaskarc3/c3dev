@@ -17,12 +17,15 @@ import ErrorModal from '@c3/app/ui/src/components/misc/ErrorModal';
 import OperationsPaginatedTable from '@c3/app/ui/src/components/table/OperationsPaginatedTable';
 import KPIStatsContainer from '@c3/app/ui/src/components/stats/KPIStatsContainer';
 import KPIStatsTile from '@c3/app/ui/src/components/stats/KPIStatsTile';
+import { ThemeProvider, useTheme } from '@c3/app/ui/src/contexts/ThemeContext';
 
 interface ContentHeaderProps {
   title: string;
 }
 
 const ContentHeader = ({ title }: ContentHeaderProps) => {
+  const { theme } = useTheme();
+
   return (
     <div style={{ marginBottom: '16px' }}>
       <h1
@@ -30,7 +33,7 @@ const ContentHeader = ({ title }: ContentHeaderProps) => {
           margin: 0,
           fontWeight: 700,
           fontSize: '2rem',
-          color: '#000000',
+          color: theme.text,
           letterSpacing: '-0.01em',
         }}
       >
@@ -45,7 +48,9 @@ interface ContentDescriptionProps {
 }
 
 const ContentDescription = ({ description }: ContentDescriptionProps) => {
-  return <p style={{ color: '#666', fontSize: '1.125rem', margin: 0, lineHeight: '1.6' }}>{description}</p>;
+  const { theme } = useTheme();
+
+  return <p style={{ color: theme.textSecondary, fontSize: '1.125rem', margin: 0, lineHeight: '1.6' }}>{description}</p>;
 };
 
 interface FilterSectionProps {
@@ -272,7 +277,7 @@ const FilterSection = ({
   );
 };
 
-const AircraftOperationsPage = () => {
+const AircraftOperationsPageContent = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [earliestStartDate, setEarliestStartDate] = useState<Date | null>(null);
@@ -385,7 +390,6 @@ const AircraftOperationsPage = () => {
       <div
         style={{
           padding: '24px',
-          backgroundColor: '#fff',
           minHeight: '100vh',
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
         }}
@@ -426,6 +430,14 @@ const AircraftOperationsPage = () => {
         </ContentSection>
       </div>
     </PageContainer>
+  );
+};
+
+const AircraftOperationsPage = () => {
+  return (
+    <ThemeProvider>
+      <AircraftOperationsPageContent />
+    </ThemeProvider>
   );
 };
 
