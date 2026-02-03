@@ -1,5 +1,2 @@
-// remix type PhysicalAsset
-// This file resolves type remix warnings for PhysicalAsset across multiple packages.
-// See: /diagramParsing/src/core/PhysicalAsset.c3typ, /reliabilityCapability/src/reliability/assetHierarchy/PhysicalAsset.c3typ, /sensor/src/PhysicalAsset.c3typ, /physicalAsset/src/PhysicalAsset.c3typ
-
-remix type PhysicalAsset
+remix type PhysicalAsset {
+}

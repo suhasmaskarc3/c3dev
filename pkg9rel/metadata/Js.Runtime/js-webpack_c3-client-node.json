@@ -1,0 +1,7 @@
+{
+  "type": "Js.Runtime",
+  "name": "js-webpack_c3-client-node",
+  "libraries": [
+    "npm react-icons@5.5.0"
+  ]
+}

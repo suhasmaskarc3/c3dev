@@ -2,13 +2,23 @@
 // C3 Type Definition for WeatherObservation
 // Represents a single weather data point for a location at a specific time.
 
-type WeatherObservation {
+entity type WeatherObservation {
 
   location: string;      // City, facility, or custom location label
   lat: double;          // Latitude
   long: double;         // Longitude
   temp: double;         // Temperature (°C or °F, as per system)
   condition: string;    // Weather condition (e.g., "Clear", "Rain")
-  timestamp: long;      // Unix epoch milliseconds
+  timestamp: double;     // Unix epoch milliseconds
+
+  /**
+   * Fetch current weather data for given coordinates
+   */
+  fetchWeatherByCoordinates: member function(lat: double, long: double): WeatherObservation js-server
+  
+  /**
+   * Geocode a location query (city name or ZIP code) to coordinates
+   */
+  geocodeLocation: member function(query: string): [WeatherObservation] js-server
 
 }

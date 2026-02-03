@@ -1,31 +1,163 @@
 <!-- Weather Widget HTML: main entry point -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Widget Page</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-</head>
-<body>
-    <nav style="background-color:#e0e0e0;padding:1rem 2rem;display:flex;align-items:center;gap:16px;">
-        <span style="color:#333;font-weight:500;">Weather:</span>
-        <div id="weather-widget-root" style="display:flex;align-items:center;gap:16px;"></div>
-    </nav>
-    <div style="padding:2rem;max-width:1200px;margin:0 auto;">
-        <div style="background-color:white;">
-            <h1 style="color:#2c3e50;margin-bottom:1rem;">Welcome to the Weather Widget</h1>
-        </div>
-    </div>
+    <style>
+        :root, [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #e0e0e0;
+            --bg-tertiary: #f5f5f5;
+            --bg-input: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-muted: #888888;
+            --border-color: #dddddd;
+            --accent-color: #007bff;
+            --success-color: #28a745;
+            --error-color: #d32f2f;
+            --overlay-bg: rgba(0,0,0,0.5);
+            --dropdown-hover: #f0f0f0;
+            --selected-bg: #e3f2fd;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-tertiary: #0f3460;
+            --bg-input: #1a1a2e;
+            --text-primary: #e8e8e8;
+            --text-secondary: #b8b8b8;
+            --text-muted: #8888aa;
+            --border-color: #3a3a5c;
+            --accent-color: #4dabf7;
+            --success-color: #51cf66;
+            --error-color: #ff6b6b;
+            --overlay-bg: rgba(0,0,0,0.7);
+            --dropdown-hover: #0f3460;
+            --selected-bg: #1e4976;
+        }
+        * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); }
+        .theme-toggle { background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 20px; padding: 8px 16px; cursor: pointer; font-size: 14px; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+        .theme-toggle:hover { background: var(--dropdown-hover); }
+        .theme-icon { font-size: 18px; }
+        nav { background-color: var(--bg-secondary); padding: 1rem 2rem; display: flex; align-items: center; gap: 16px; }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+        #language-selector { position: relative; }
+        #lang-btn { background: transparent; border: 1px solid var(--border-color); border-radius: 4px; padding: 6px 10px; cursor: pointer; font-size: 12px; color: var(--text-primary); display: flex; align-items: center; gap: 4px; }
+        #lang-menu { display: none; position: absolute; top: 100%; right: 0; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 4px; margin-top: 4px; min-width: 120px; z-index: 1000; max-height: 300px; overflow: auto; }
+        .lang-item { padding: 8px 12px; cursor: pointer; color: var(--text-primary); }
+        .lang-item:hover { background: var(--dropdown-hover); }
+        .lang-item.selected { background: var(--selected-bg); }
+        .content-wrapper { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    </style>
     <script type="importmap">
     {
         "imports": {
             "react": "https://esm.sh/react@18.2.0",
-            "react-icons/fa": "https://esm.sh/react-icons@5.0.1/fa?external=react"
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime"
         }
     }
     </script>
-    <script type="module" src="./weatherWidget.js"></script>
+</head>
+<body>
+    <nav>
+        <span style="font-weight:500;">Weather:</span>
+        <div id="weather-widget-root" style="display:flex;align-items:center;gap:16px;"></div>
+        <div class="nav-right">
+            <div id="language-selector">
+                <button id="lang-btn"><span style="font-size:14px;">🌐</span><span id="lang-name">English</span></button>
+                <div id="lang-menu"></div>
+            </div>
+            <button class="theme-toggle" id="theme-btn">
+                <span class="theme-icon" id="theme-icon">🌙</span>
+                <span id="theme-label">Dark</span>
+            </button>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <h1 style="margin-bottom:1rem;">Welcome to the Weather Widget</h1>
+    </div>
+    <script>
+        const LANGUAGES = [
+            { code: 'en', name: 'English' }, { code: 'es', name: 'Español' }, { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' }, { code: 'zh_cn', name: '中文' }, { code: 'ja', name: '日本語' },
+            { code: 'kr', name: '한국어' }, { code: 'pt', name: 'Português' }, { code: 'it', name: 'Italiano' },
+            { code: 'nl', name: 'Nederlands' }, { code: 'ru', name: 'Русский' }, { code: 'ar', name: 'العربية' },
+            { code: 'hi', name: 'हिन्दी' },
+        ];
+
+        // Cache DOM elements
+        const $ = id => document.getElementById(id);
+        const langMenu = $('lang-menu'), langName = $('lang-name'), langSelector = $('language-selector');
+        const themeIcon = $('theme-icon'), themeLabel = $('theme-label');
+
+        const getCurrentLang = () => localStorage.getItem('weatherLang') || 'en';
+
+        function renderLangMenu() {
+            const current = getCurrentLang();
+            langMenu.innerHTML = LANGUAGES.map(l =>
+                `<div class="lang-item${l.code === current ? ' selected' : ''}" data-code="${l.code}">${l.name}</div>`
+            ).join('');
+        }
+
+        function setLang(code) {
+            localStorage.setItem('weatherLang', code);
+            langName.textContent = (LANGUAGES.find(l => l.code === code) || LANGUAGES[0]).name;
+            langMenu.style.display = 'none';
+            renderLangMenu();
+            window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: code } }));
+        }
+
+        // Event delegation for language menu
+        langMenu.addEventListener('click', e => {
+            const item = e.target.closest('.lang-item');
+            if (item) setLang(item.dataset.code);
+        });
+
+        $('lang-btn').addEventListener('click', e => {
+            e.stopPropagation();
+            langMenu.style.display = langMenu.style.display === 'none' ? 'block' : 'none';
+        });
+
+        document.addEventListener('click', e => {
+            if (!langSelector.contains(e.target)) langMenu.style.display = 'none';
+        });
+
+        function updateThemeUI(theme) {
+            themeIcon.textContent = theme === 'light' ? '🌙' : '☀️';
+            themeLabel.textContent = theme === 'light' ? 'Dark' : 'Light';
+        }
+
+        function toggleTheme() {
+            const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeUI(next);
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: next } }));
+        }
+
+        $('theme-btn').addEventListener('click', toggleTheme);
+
+        // Initialize
+        (function init() {
+            let lang = localStorage.getItem('weatherLang');
+            if (!lang) {
+                const browserLang = navigator.language.split('-')[0];
+                lang = (LANGUAGES.find(l => l.code === browserLang || l.code.startsWith(browserLang)) || LANGUAGES[0]).code;
+                localStorage.setItem('weatherLang', lang);
+            }
+            langName.textContent = (LANGUAGES.find(l => l.code === lang) || LANGUAGES[0]).name;
+            renderLangMenu();
+
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeUI(theme);
+        })();
+    </script>
+    <script type="module" src="/weatherWidget.tsx"></script>
 </body>
 </html>

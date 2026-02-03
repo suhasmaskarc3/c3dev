@@ -21,6 +21,7 @@
     "reliabilityAssetCase" : "21.0.1+1.8.9.0-rc.189.2810d88813c8efecf7e3888c5aeb32e7cebd8d30.develop.uid.ad884e45-rsc",
     "sensorHealth" : "14.0.14-stable.35+35.8.8.13.407.93bc4416ddb5564dafc8d1f119cfb366c11dd0e6.support.v14.0.uid.4f48e436-rsc",
     "item" : "14.0.14-stable.35+35.8.8.13.407.93bc4416ddb5564dafc8d1f119cfb366c11dd0e6.support.v14.0.uid.4f48e436-rsc",
+    "uiPrimitives" : "8.9.0-stable.19+19.8.9.0-rc.189.17b953b8884b781a8699aec1ef6528115e8596b3.bugfix.v8.9.smc.PLAT-127187.uid.8d57afb9-rsc",
     "fileAttachment" : "14.0.14-stable.35+35.8.8.13.407.93bc4416ddb5564dafc8d1f119cfb366c11dd0e6.support.v14.0.uid.4f48e436-rsc",
     "stateMachineWorkflow" : "14.0.14-stable.35+35.8.8.13.407.93bc4416ddb5564dafc8d1f119cfb366c11dd0e6.support.v14.0.uid.4f48e436-rsc",
     "masterSensor" : "21.0.1+1.8.9.0-rc.189.2810d88813c8efecf7e3888c5aeb32e7cebd8d30.develop.uid.ad884e45-rsc",

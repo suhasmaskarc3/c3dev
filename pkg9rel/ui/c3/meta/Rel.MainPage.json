@@ -1,0 +1,8 @@
+{
+    "type": "UiSdlConnected<UiSdlLayoutBase>",
+    "component": {
+        "children": [{
+            "id": "SDLTest"
+        }]
+    }
+}
